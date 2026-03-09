@@ -255,6 +255,17 @@
         .btn-google-maps:hover {
             background: #12452b;
         }
+        /* Estilo para tooltips permanentes (sectores) */
+        .sector-tooltip {
+            background: rgba(0,0,0,0.7);
+            color: white;
+            font-size: 11px;
+            font-weight: bold;
+            padding: 2px 6px;
+            border-radius: 12px;
+            border: 1px solid #f0b84d;
+            white-space: nowrap;
+        }
         /* Responsive */
         @media (max-width: 700px) {
             .base-buttons { bottom: 15px; left: 10px; }
@@ -267,12 +278,12 @@
 <body>
     <div id="map"></div>
 
-    <!-- Panel superior desplegable -->
+    <!-- Panel superior desplegable (identidad) -->
     <div class="brand-panel" id="brandPanel">
         <button class="toggle-btn" id="toggleBrandBtn"><i class="fas fa-chevron-up"></i></button>
         <div class="escudo-simbolo">
             <i class="fas fa-crown"></i>
-            <span>1·3 JUN<br>2024-2026</span>
+            <span>1·3 JUN<br>2020-2021</span>
         </div>
         <div class="text-logo">
             <div class="municipio">LOS GUAYOS <small>Carabobo</small></div>
@@ -282,15 +293,14 @@
             <i class="fas fa-map-signal"></i> BALDWYN MUJICA
         </div>
         <div class="fecha-union">
-            <i class="fas fa-handshake"></i> ORDEN Y GESTIÓN
+            <i class="fas fa-handshake"></i> UNIÓN Y PROSPERIDAD
         </div>
     </div>
 
-    <!-- Botones de capa base (inferior izquierda) -->
+    <!-- Botones de capa base (inferior izquierda) + descarga -->
     <div class="base-buttons">
         <button id="btnCalle" class="base-btn active"><i class="fas fa-map"></i> Vista calle</button>
         <button id="btnSatelite" class="base-btn"><i class="fas fa-satellite"></i> Satélite</button>
-        <!-- Botón de descarga integrado aquí -->
         <button class="download-btn" id="downloadMapBtn">
             <i class="fas fa-download"></i> <span>Descargar mapa</span>
         </button>
@@ -344,7 +354,7 @@
 
             // ---------- DATOS COMPLETOS (corregidos y aumentados) ----------
 
-            // 1. CENTROS DE VOTACIÓN 2024
+            // 1. CENTROS DE VOTACIÓN 2024 (con info)
             const centrosVotacion = [
                 {lat: 10.17582273, lng: -67.93876326, nombre: "UNIDAD EDUCATIVA SANTISIMA TRINIDAD", info: "5 mesas y 4106 votantes"},
                 {lat: 10.18840028, lng: -67.93775610, nombre: "ESCUELA BASICA LICENCIADA ELISA GUEVARA DE CACERES", info: "3 mesas y 2751 votantes"},
@@ -394,7 +404,7 @@
                 {lat: 10.18248855, lng: -67.91107779, nombre: "PRE-ESCOLAR ZAIDA CEDEÑO", info: "1 mesa y 457 votantes"}
             ];
 
-            // 2. DEPORTE (con nuevos puntos)
+            // 2. DEPORTE
             const deporte = [
                 {lat:10.106494525210145, lng:-67.92012630646292, nombre:"Campo deportivo argimiro gabardon"},
                 {lat:10.105860565095638, lng:-67.92214717347639, nombre:"Cancha deportivo La unión"},
@@ -440,7 +450,7 @@
                 {lat:10.158275692090216, lng:-67.89498081513577, nombre:"Hacienda Delgado"}
             ];
 
-            // 5. INSTITUCIONES EDUCATIVAS (corregidas)
+            // 5. INSTITUCIONES EDUCATIVAS (corregidas: todas con longitud negativa)
             const educativas = [
                 {lat:10.17582273, lng:-67.93876326, nombre:"UNIDAD EDUCATIVA SANTISIMA TRINIDAD"},
                 {lat:10.18840028, lng:-67.93775610, nombre:"ESCUELA BASICA LICENCIADA ELISA GUEVARA DE CACERES"},
@@ -501,7 +511,50 @@
                 {lat:10.158284592423664, lng:-67.9142693515971, nombre:"Plaza del Roble"}
             ];
 
-            // ---------- LÍMITE MUNICIPAL (polígono punteado) ----------
+            // 7. SECTORES (con nombres permanentes)
+            const sectores = [
+                {lat:10.189074247403141, lng:-67.9376637190773, nombre:"Casco Los guayos"},
+                {lat:10.19300175453465, lng:-67.93458362731073, nombre:"Araguaney"},
+                {lat:10.190918539068392, lng:-67.93194618248124, nombre:"La pelayera"},
+                {lat:10.200320, lng:-67.909262, nombre:"Las Vegas"},
+                {lat:10.187682, lng:-67.917832, nombre:"Paraparal"},
+                {lat:10.180420, lng:-67.937449, nombre:"Los Guayos Segunda Etapa"},
+                {lat:10.176762, lng:-67.936114, nombre:"Los Guayos Primera Etapa"},
+                {lat:10.183776, lng:-67.932945, nombre:"Negro Primero"},
+                {lat:10.185099, lng:-67.937146, nombre:"Ali Primera"},
+                {lat:10.179764, lng:-67.929018, nombre:"Felix Rios"},
+                {lat:10.170070727327197, lng:-67.9296827894134, nombre:"Aguitas III"},
+                {lat:10.170385956175712, lng:-67.92222540778711, nombre:"Aguitas II"},
+                {lat:10.1648141630902, lng:-67.91992305639741, nombre:"Piedras Negras"},
+                {lat:10.163188951329428, lng:-67.92702292247675, nombre:"Aguitas VI"},
+                {lat:10.163970414976767, lng:-67.92396451876725, nombre:"Aguitas V"},
+                {lat:10.175189568479277, lng:-67.93005456932828, nombre:"Aguitas I"},
+                {lat:10.167785515081059, lng:-67.92178589260908, nombre:"Aguitas IV"},
+                {lat:10.19026110081683, lng:-67.90888375222757, nombre:"Bosque Real"},
+                {lat:10.189897357323387, lng:-67.91535029759171, nombre:"Tacarigua I"},
+                {lat:10.187466651169077, lng:-67.91417851751989, nombre:"Tacarigua II"},
+                {lat:10.184621903761819, lng:-67.91024062195719, nombre:"Tacarigua III"},
+                {lat:10.181535033466716, lng:-67.90807615168501, nombre:"Tacarigua IV"},
+                {lat:10.178733969681538, lng:-67.90887401892365, nombre:"Tacarigua V"},
+                {lat:10.181316860038566, lng:-67.91458975192252, nombre:"Miralvalle"},
+                {lat:10.176134030757233, lng:-67.91513875640082, nombre:"Quintas 2000"},
+                {lat:10.177345582801443, lng:-67.91209890707637, nombre:"Parque Nomentana"},
+                {lat:10.16886762852786, lng:-67.89956893107698, nombre:"San Judas Tadeo"},
+                {lat:10.170656326652242, lng:-67.90945100876883, nombre:"Los Cerritos"},
+                {lat:10.174906348292124, lng:-67.89898301632789, nombre:"Buenaventura"},
+                {lat:10.16269323563398, lng:-67.9003381923896, nombre:"Alicia Pietri"},
+                {lat:10.15926130072191, lng:-67.91397071240154, nombre:"El Roble"},
+                {lat:10.137459447381525, lng:-67.90163805375425, nombre:"La Culebra"},
+                {lat:10.137917413637675, lng:-67.87516708914609, nombre:"Isla La culebra"},
+                {lat:10.140974298595756, lng:-67.90093545986544, nombre:"Glorieta"},
+                {lat:10.121372833264271, lng:-67.89234929596488, nombre:"Saman Mocho"},
+                {lat:10.108307086192935, lng:-67.89407769581351, nombre:"Pirital"},
+                {lat:10.105722521572433, lng:-67.90645043146446, nombre:"Charal"},
+                {lat:10.11412578623221, lng:-67.92326563539585, nombre:"Cascabel"},
+                {lat:10.104907667184557, lng:-67.92220230144322, nombre:"La Union"}
+            ];
+
+            // ---------- LÍMITE MUNICIPAL (línea azul punteada) ----------
             const limites = [
                 [10.209083747610128, -67.91127684975459], [10.206527525312698, -67.91100137490947], [10.212586321145846, -67.91235077093202],
                 [10.210432307328059, -67.91432487671563], [10.207560266215832, -67.91848766499842], [10.206926724180223, -67.91870224200103],
@@ -557,7 +610,7 @@
                 [10.198596871149675, -67.90715893034303], [10.201058084848738, -67.90638167489952], [10.20519554172376, -67.90938931555779],
                 [10.206505946931202, -67.91099789644403], [10.209238540893097, -67.91129658143669]
             ];
-            const limitePoly = L.polygon(limites, { color: '#0000FF', weight: 3, dashArray: '8 8', fill: false, opacity: 0.9 }).addTo(map);
+            const limitePoly = L.polygon(limites, { color: '#1E90FF', weight: 3, dashArray: '8 8', fill: false, opacity: 0.9 }).addTo(map);
 
             // ---------- FUNCIÓN PARA CREAR MARCADORES CON POPUP Y BOTÓN GOOGLE MAPS ----------
             function crearGrupoMarcadores(datos, color, categoria) {
@@ -583,6 +636,22 @@
                 return grupo;
             }
 
+            // Función para crear marcadores de sectores con tooltip permanente
+            function crearSectores(datos) {
+                const grupo = L.featureGroup();
+                datos.forEach(item => {
+                    const marker = L.circleMarker([item.lat, item.lng], {
+                        radius: 6,
+                        fillColor: '#808080',
+                        color: '#333',
+                        weight: 1,
+                        fillOpacity: 0.8
+                    }).bindTooltip(item.nombre, { permanent: true, direction: 'top', className: 'sector-tooltip' });
+                    grupo.addLayer(marker);
+                });
+                return grupo;
+            }
+
             // Crear grupos por categoría
             const grupoVotacion = crearGrupoMarcadores(centrosVotacion, '#d42e2e', 'Votación 2024');
             const grupoDeporte = crearGrupoMarcadores(deporte, '#1f77b4', 'Deporte');
@@ -590,6 +659,7 @@
             const grupoAgricultura = crearGrupoMarcadores(agricultura, '#2e8b57', 'Agricultura');
             const grupoEducacion = crearGrupoMarcadores(educativas, '#9467bd', 'Educación');
             const grupoTurismo = crearGrupoMarcadores(turismo, '#ff8c42', 'Turismo');
+            const grupoSectores = crearSectores(sectores);
 
             // Añadir todos los grupos al mapa
             grupoVotacion.addTo(map);
@@ -598,6 +668,7 @@
             grupoAgricultura.addTo(map);
             grupoEducacion.addTo(map);
             grupoTurismo.addTo(map);
+            grupoSectores.addTo(map);
 
             // Control de capas superpuestas (solo overlays) en la parte inferior derecha
             const overlays = {
@@ -607,7 +678,8 @@
                 "🌽 Agricultura": grupoAgricultura,
                 "📚 Educación": grupoEducacion,
                 "🏞️ Turismo": grupoTurismo,
-                "🚩 Límite municipal": limitePoly
+                "🏘️ Sectores": grupoSectores,
+                "🔷 Límite municipal": limitePoly
             };
             L.control.layers(null, overlays, { collapsed: false, position: 'bottomright' }).addTo(map);
 
@@ -666,7 +738,6 @@
             // ---------- Toggle panel superior ----------
             const brandPanel = document.getElementById('brandPanel');
             const toggleBtn = document.getElementById('toggleBrandBtn');
-            let panelCollapsed = false;
             toggleBtn.addEventListener('click', () => {
                 brandPanel.classList.toggle('collapsed');
                 const icon = toggleBtn.querySelector('i');
