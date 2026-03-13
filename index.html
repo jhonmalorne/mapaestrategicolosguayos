@@ -604,7 +604,6 @@
             }
 
             // Crear grupos por categoría
-            const grupoVotacion = crearGrupoMarcadores(centrosVotacion, '#d42e2e', 'Votación 2024');
             const grupoDeporte = crearGrupoMarcadores(deporte, '#1f77b4', 'Deporte');
             const grupoSalud = crearGrupoMarcadores(salud, '#c9a03d', 'Salud');
             const grupoAgricultura = crearGrupoMarcadores(agricultura, '#2e8b57', 'Agricultura');
@@ -613,7 +612,6 @@
             const grupoSectores = crearSectores(sectores);
 
             // Añadir todos los grupos al mapa
-            grupoVotacion.addTo(map);
             grupoDeporte.addTo(map);
             grupoSalud.addTo(map);
             grupoAgricultura.addTo(map);
@@ -623,7 +621,6 @@
 
             // Control de capas superpuestas (solo overlays) en la parte inferior derecha
             const overlays = {
-                "🗳️ Votación 2024": grupoVotacion,
                 "⚽ Deporte": grupoDeporte,
                 "🏥 Salud": grupoSalud,
                 "🌽 Agricultura": grupoAgricultura,
