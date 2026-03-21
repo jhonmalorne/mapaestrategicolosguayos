@@ -621,13 +621,12 @@
 
             // Control de capas superpuestas (solo overlays) en la parte inferior derecha
             const overlays = {
-                "? Deporte": grupoDeporte,
-                "?? Salud": grupoSalud,
-                "?? Agricultura": grupoAgricultura,
-                "?? Educación": grupoEducacion,
-                "??? Turismo": grupoTurismo,
-                "??? Sectores": grupoSectores,
-                "?? Límite municipal": limitePoly
+               "⚽ Deporte": grupoDeporte,
+                "🏥 Salud": grupoSalud,
+                "🌽 Agricultura": grupoAgricultura,
+                "📚 Educación": grupoEducacion,
+                "🏞️ Turismo": grupoTurismo,
+                "🚩 Límite municipal": limitePoly
             };
             L.control.layers(null, overlays, { collapsed: false, position: 'bottomright' }).addTo(map);
 
